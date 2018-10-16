@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 15, 2018 at 07:20 PM
+-- Generation Time: Oct 16, 2018 at 05:32 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `tbldepartment` (
 
 CREATE TABLE IF NOT EXISTS `tblmodel` (
   `ModelIDPK` int(11) NOT NULL AUTO_INCREMENT,
-  `Description` varchar(200) NOT NULL,
+  `ModDescription` varchar(200) NOT NULL,
   PRIMARY KEY (`ModelIDPK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
