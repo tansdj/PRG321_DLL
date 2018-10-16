@@ -21,7 +21,7 @@ public class Datahandler {
 
     Connection cn;
 
-    public Datahandler() {
+    public Datahandler() {//Connect once when class is instantiated.
         connect();
     }
     
