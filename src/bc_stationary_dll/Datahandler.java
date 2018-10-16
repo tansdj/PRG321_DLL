@@ -21,29 +21,36 @@ public class Datahandler {
 
     Connection cn;
 
-    public void connect() {
+    public Datahandler() {//Connect once when class is instantiated.
+        connect();
+    }
+    
+
+    public final void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bc_stationary?zeroDateTimeBehavior=convertToNull");
+            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bc_stationary","root","");
 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public ResultSet selectQuery(String tableName) {
+    public ResultSet selectQuery(String tableName) throws SQLException {
         ResultSet rs = null;
         try {
             Statement st = cn.createStatement();
             rs = st.executeQuery("SELECT * FROM `" + tableName + "`");
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.close();
         }
 
         return rs;
     }
 
-    public ResultSet selectQuery(String tableName, String conditions) {
+    public ResultSet selectQuery(String tableName, String conditions) throws SQLException {
         ResultSet rs = null;
         try {
             Statement st = cn.createStatement();
@@ -51,12 +58,26 @@ public class Datahandler {
             rs = st.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.close();
         }
 
         return rs;
     }
-
-    public int performInsert(String tablename, String[][] colValues) {
+    
+    public ResultSet selectQuerySpec(String query) throws SQLException{
+      ResultSet rs = null;
+        try {
+            Statement st = cn.createStatement();
+            rs = st.executeQuery(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            cn.close();
+        } 
+        return rs;
+    }
+    public int performInsert(String tablename, String[][] colValues) throws SQLException {
         String query = "INSERT INTO `" + tablename + "`(";
         try {
             Statement st = cn.createStatement();
@@ -77,11 +98,13 @@ public class Datahandler {
             return st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.close();
         }
         return -1;
     }
     
-    public int performUpdate(String tablename, String[][] colValues,String conditions){
+    public int performUpdate(String tablename, String[][] colValues,String conditions) throws SQLException{
         String query = "UPDATE `" + tablename + "`SET ";
         try {
             Statement st = cn.createStatement();
@@ -100,11 +123,13 @@ public class Datahandler {
             return st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.close();
         }
         return -1;
     }
     
-    public int performDelete(String tablename,String conditions){
+    public int performDelete(String tablename,String conditions) throws SQLException{
         String query = "DELETE FROM `" + tablename + "`";
         try {
             Statement st = cn.createStatement();
@@ -114,6 +139,8 @@ public class Datahandler {
             return st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            cn.close();
         }
         return -1;
     }
