@@ -25,6 +25,7 @@ public class Datahandler {
         connect();
     }
     
+    
 
     public final void connect() {
         try {
@@ -41,12 +42,10 @@ public class Datahandler {
         try {
             Statement st = cn.createStatement();
             rs = st.executeQuery("SELECT * FROM `" + tableName + "`");
+            
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            cn.close();
         }
-
         return rs;
     }
 
@@ -58,10 +57,7 @@ public class Datahandler {
             rs = st.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            cn.close();
         }
-
         return rs;
     }
     
@@ -72,8 +68,6 @@ public class Datahandler {
             rs = st.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            cn.close();
         } 
         return rs;
     }
@@ -87,7 +81,8 @@ public class Datahandler {
             query = query.substring(0, query.length() - 1);
             query += ") VALUES(";
             for (String[] item : colValues) {
-                if (item[0].equals("STRING") || item[0].equals("DATE")) {
+                String type = item[0].toString().toUpperCase();
+                if (type.equals("STRING") || type.equals("DATE")) {
                     query += "'" + item[2] + "',";
                 } else {
                     query += item[2] + ",";
@@ -98,8 +93,6 @@ public class Datahandler {
             return st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            cn.close();
         }
         return -1;
     }
@@ -110,7 +103,8 @@ public class Datahandler {
             Statement st = cn.createStatement();
             for (String[] item : colValues) {
                 query += "`" + item[1] + "` = ";
-                if (item[0].equals("STRING") || item[0].equals("DATE")) {
+                String type = item[0].toString().toUpperCase();
+                if (type.equals("STRING") || type.equals("DATE")) {
                     query += "'" + item[2] + "',";
                 } else {
                     query += item[2]+",";
@@ -123,8 +117,6 @@ public class Datahandler {
             return st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(Datahandler.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            cn.close();
         }
         return -1;
     }
