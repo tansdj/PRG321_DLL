@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 16, 2018 at 05:32 PM
+-- Generation Time: Oct 22, 2018 at 07:17 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -33,7 +33,14 @@ CREATE TABLE IF NOT EXISTS `tbladdress` (
   `City` varchar(50) NOT NULL,
   `PostalCode` char(4) NOT NULL,
   PRIMARY KEY (`AddressIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `tbladdress`
+--
+
+INSERT INTO `tbladdress` (`AddressIDPK`, `Line1`, `Line2`, `City`, `PostalCode`) VALUES
+(5, '21 Riverside', 'Downbern', 'Pretoria', '0182');
 
 -- --------------------------------------------------------
 
@@ -43,9 +50,16 @@ CREATE TABLE IF NOT EXISTS `tbladdress` (
 
 CREATE TABLE IF NOT EXISTS `tblcategory` (
   `CategoryIDPK` int(11) NOT NULL AUTO_INCREMENT,
-  `Description` varchar(200) NOT NULL,
+  `CatDescription` varchar(200) NOT NULL,
   PRIMARY KEY (`CategoryIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tblcategory`
+--
+
+INSERT INTO `tblcategory` (`CategoryIDPK`, `CatDescription`) VALUES
+(2, 'Pens');
 
 -- --------------------------------------------------------
 
@@ -60,7 +74,14 @@ CREATE TABLE IF NOT EXISTS `tblcontact` (
   PRIMARY KEY (`ContactIDPK`),
   UNIQUE KEY `Cell` (`Cell`),
   UNIQUE KEY `Email` (`Email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tblcontact`
+--
+
+INSERT INTO `tblcontact` (`ContactIDPK`, `Cell`, `Email`) VALUES
+(3, '0798264300', 'tansdjspam@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -72,7 +93,14 @@ CREATE TABLE IF NOT EXISTS `tbldepartment` (
   `DepartmentIDPK` int(11) NOT NULL AUTO_INCREMENT,
   `DepName` varchar(30) NOT NULL,
   PRIMARY KEY (`DepartmentIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tbldepartment`
+--
+
+INSERT INTO `tbldepartment` (`DepartmentIDPK`, `DepName`) VALUES
+(2, 'Administration');
 
 -- --------------------------------------------------------
 
@@ -84,6 +112,44 @@ CREATE TABLE IF NOT EXISTS `tblmodel` (
   `ModelIDPK` int(11) NOT NULL AUTO_INCREMENT,
   `ModDescription` varchar(200) NOT NULL,
   PRIMARY KEY (`ModelIDPK`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tblmodel`
+--
+
+INSERT INTO `tblmodel` (`ModelIDPK`, `ModDescription`) VALUES
+(2, 'Model1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblorder`
+--
+
+CREATE TABLE IF NOT EXISTS `tblorder` (
+  `OrderIDPK` int(11) NOT NULL AUTO_INCREMENT,
+  `UserIdFK` int(11) NOT NULL,
+  `OrderDate` date NOT NULL,
+  `ReceivedDate` date NOT NULL,
+  PRIMARY KEY (`OrderIDPK`),
+  KEY `UserIdFK` (`UserIdFK`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblorderitems`
+--
+
+CREATE TABLE IF NOT EXISTS `tblorderitems` (
+  `OrderItemIDPK` int(11) NOT NULL AUTO_INCREMENT,
+  `OrderIDFK` int(11) NOT NULL,
+  `ProductIDFK` int(11) NOT NULL,
+  `ItemQty` int(11) NOT NULL,
+  PRIMARY KEY (`OrderItemIDPK`),
+  KEY `ProductIDFK` (`ProductIDFK`),
+  KEY `OrderIDFK` (`OrderIDFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -106,7 +172,14 @@ CREATE TABLE IF NOT EXISTS `tblperson` (
   KEY `AddressIDFK` (`AddressIDFK`),
   KEY `ContactIDFK` (`ContactIDFK`),
   KEY `DepIDFK` (`DepIDFK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tblperson`
+--
+
+INSERT INTO `tblperson` (`PersonIDPK`, `IDNumber`, `Name`, `Surname`, `AddressIDFK`, `ContactIDFK`, `DepIDFK`, `Campus`) VALUES
+(1, '9711160103084', 'Tanya', 'de Jager', 5, 3, 2, 'PE');
 
 -- --------------------------------------------------------
 
@@ -127,7 +200,14 @@ CREATE TABLE IF NOT EXISTS `tblproduct` (
   PRIMARY KEY (`ProductIDPK`),
   KEY `CategoryIDFK` (`CategoryIDFK`),
   KEY `ModelIDFK` (`ModelIDFK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tblproduct`
+--
+
+INSERT INTO `tblproduct` (`ProductIDPK`, `Name`, `Description`, `CategoryIDFK`, `Status`, `ModelIDFK`, `CostPrice`, `SalesPrice`, `EntryDate`) VALUES
+(2, 'Prod1', 'desc1', 2, 'Unavailable', 2, 25, 27.5, '1916-12-08');
 
 -- --------------------------------------------------------
 
@@ -139,7 +219,14 @@ CREATE TABLE IF NOT EXISTS `tblsecurityquestions` (
   `QuestionIDPK` int(11) NOT NULL AUTO_INCREMENT,
   `Question` varchar(500) NOT NULL,
   PRIMARY KEY (`QuestionIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tblsecurityquestions`
+--
+
+INSERT INTO `tblsecurityquestions` (`QuestionIDPK`, `Question`) VALUES
+(2, 'What is your mothers maiden name?');
 
 -- --------------------------------------------------------
 
@@ -153,7 +240,14 @@ CREATE TABLE IF NOT EXISTS `tblstock` (
   `Quantity` int(11) NOT NULL,
   PRIMARY KEY (`StockIDPK`),
   KEY `ProductIDFK` (`ProductIDFK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tblstock`
+--
+
+INSERT INTO `tblstock` (`StockIDPK`, `ProductIDFK`, `Quantity`) VALUES
+(2, 2, 10);
 
 -- --------------------------------------------------------
 
@@ -171,7 +265,14 @@ CREATE TABLE IF NOT EXISTS `tbluser` (
   PRIMARY KEY (`UserIDPK`),
   UNIQUE KEY `Username` (`Username`),
   KEY `PersonIDFK` (`PersonIDFK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbluser`
+--
+
+INSERT INTO `tbluser` (`UserIDPK`, `PersonIDFK`, `Username`, `Password`, `AccessLevel`, `Status`) VALUES
+(1, 1, 'tansdj', 'pw123456', 'Admin', 'Active');
 
 -- --------------------------------------------------------
 
@@ -185,10 +286,13 @@ CREATE TABLE IF NOT EXISTS `tbluserrequest` (
   `ProductIDFK` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Priority` int(11) NOT NULL,
+  `ReqStatus` varchar(20) NOT NULL,
+  `ReqDate` date NOT NULL,
+  `DateCompleted` date DEFAULT NULL,
   PRIMARY KEY (`RequestIDPK`),
   KEY `ProductIDFK` (`ProductIDFK`),
   KEY `UserIDFK` (`UserIDFK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -206,6 +310,19 @@ CREATE TABLE IF NOT EXISTS `tblusersecurityquestions` (
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tblorder`
+--
+ALTER TABLE `tblorder`
+  ADD CONSTRAINT `tblorder_ibfk_1` FOREIGN KEY (`UserIdFK`) REFERENCES `tbluser` (`UserIDPK`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tblorderitems`
+--
+ALTER TABLE `tblorderitems`
+  ADD CONSTRAINT `tblorderitems_ibfk_2` FOREIGN KEY (`OrderIDFK`) REFERENCES `tblorder` (`OrderIDPK`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tblorderitems_ibfk_1` FOREIGN KEY (`ProductIDFK`) REFERENCES `tblproduct` (`ProductIDPK`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tblperson`
