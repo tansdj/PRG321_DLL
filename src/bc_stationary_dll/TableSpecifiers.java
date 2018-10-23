@@ -23,6 +23,8 @@ public enum TableSpecifiers {
     CATEGORY("tblcategory"),
     REQUEST("tbluserrequest"),
     STOCK("tblstock"),
+    ORDER("tblorder"),
+    ORDER_ITEMS("tblorderitems"),
     MODEL("tblmodel");
     
     

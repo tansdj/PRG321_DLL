@@ -5,6 +5,8 @@
  */
 package bc_stationary_dll;
 
+import java.util.Date;
+
 /**
  *
  * @author Tanya
@@ -45,6 +47,14 @@ public class Datahelper {
     
     public static String selectRequest = "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK`";
     
+    public static String selectOrderItems(int orderId){
+        return "SELECT * FROM `tblorderitems` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDFK` WHERE `OrderIDFK` = "+orderId;
+    }
     
+    public static String selectOrders = "SELECT * FROM `tblorder` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK`";
+    
+    public static String specificOrder(String username,Date startDate,Date endDate){
+        return "SELECT * FROM `tblorder` WHERE `UserIDFK` = (SELECT `UserIDPK` FROM `tbluser` WHERE `Username` = '"+username+"') AND `OrderDate`>='"+startDate.toString()+"' AND `ReceivedDate`<='"+endDate.toString()+"')";
+    }
     
 }
