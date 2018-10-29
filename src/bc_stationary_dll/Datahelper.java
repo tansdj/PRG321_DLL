@@ -47,6 +47,12 @@ public class Datahelper {
     
     public static String selectRequest = "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK`";
     
+    public static String selectUnprocessedRequests = "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` WHERE `ReqStatus` = 'Unprocessed'";
+    
+    public static String selectSpecUserRequest(String username){
+        return "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` WHERE `Username` = '"+username+"'";
+    }
+    
     public static String selectOrderItems(int orderId){
         return "SELECT * FROM `tblorderitems` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDFK` WHERE `OrderIDFK` = "+orderId;
     }
