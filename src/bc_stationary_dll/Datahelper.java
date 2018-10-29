@@ -39,13 +39,19 @@ public class Datahelper {
         return "SELECT * FROM `tblproduct` INNER JOIN `tblmodel` ON `ModelIDFK` = `ModelIDPK` INNER JOIN `tblcategory` ON `CategoryIDFK` = `CategoryIDPK` WHERE `Name` = '"+productName+"'";
     }
     
-    public static String selectStock = "SELECT * FROM `tblstock` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK`";
+    public static String selectStock = "SELECT * FROM `tblstock` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` INNER JOIN `tblmodel` ON `ModelIDFK` = `ModelIDPK` INNER JOIN `tblcategory` ON `CategoryIDFK` = `CategoryIDPK`";
     
     public static String specificStock(String productName){
-        return "SELECT * FROM `tblstock` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` WHERE `Name` = '"+productName+"'";
+        return "SELECT * FROM `tblstock` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK`  INNER JOIN `tblmodel` ON `ModelIDFK` = `ModelIDPK` INNER JOIN `tblcategory` ON `CategoryIDFK` = `CategoryIDPK` WHERE `Name` = '"+productName+"'";
     }
     
     public static String selectRequest = "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK`";
+    
+    public static String selectUnprocessedRequests = "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` WHERE `ReqStatus` = 'Unprocessed'";
+    
+    public static String selectSpecUserRequest(String username){
+        return "SELECT * FROM `tbluserrequest` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDPK` WHERE `Username` = '"+username+"'";
+    }
     
     public static String selectOrderItems(int orderId){
         return "SELECT * FROM `tblorderitems` INNER JOIN `tblproduct` ON `ProductIDFK` = `ProductIDFK` WHERE `OrderIDFK` = "+orderId;
@@ -54,7 +60,7 @@ public class Datahelper {
     public static String selectOrders = "SELECT * FROM `tblorder` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK`";
     
     public static String specificOrder(String username,Date startDate,Date endDate){
-        return "SELECT * FROM `tblorder` WHERE `UserIDFK` = (SELECT `UserIDPK` FROM `tbluser` WHERE `Username` = '"+username+"') AND `OrderDate`>='"+startDate.toString()+"' AND `ReceivedDate`<='"+endDate.toString()+"')";
+        return "SELECT * FROM `tblorder` INNER JOIN `tbluser` ON `UserIDFK` = `UserIDPK` WHERE `Username` = '"+username+"' AND `OrderDate`>='"+startDate.toString()+"' AND `ReceivedDate`<='"+endDate.toString()+"')";
     }
     
 }
